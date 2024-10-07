@@ -24,6 +24,5 @@ func CalculateAverage() (float64, error) {
 	if n == 0 {
     	return 0, fmt.Errorf("no numbers provided")
 	}
-
 	return sum / float64(n), nil
 }
