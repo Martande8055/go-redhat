@@ -20,7 +20,6 @@ func CalculateAverage() (float64, error) {
     	sum += val
     	n++
 	}
-
 	if n == 0 {
     	return 0, fmt.Errorf("no numbers provided")
 	}
