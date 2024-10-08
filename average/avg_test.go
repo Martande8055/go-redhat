@@ -1,6 +1,9 @@
 package average
 
-import "testing"
+import (
+	"GO_PROJECT/constants"
+	"testing"
+)
 
 func TestEvenCalcuateAverage(t *testing.T) {
 
@@ -10,20 +13,20 @@ func TestEvenCalcuateAverage(t *testing.T) {
 		expResult float64
 		expError  string
 	}{
-		{"NotContainEvenNum", []float64{1.0, 3.0, 5.0}, 0, "no even numbers"},
-		{"OnlyEvenNumbers", []float64{2.0, 4.0, 6.0}, 4.0, "no"},
-		{"AllNumbers", []float64{1.0, 2.0, 3.0, 4.0}, 3.0, "no"},
-		{"IncludeNegativeNum", []float64{-2.0, -4.0, 1.0}, -3.0, "no"},
+		{"NotContainEvenNum", []float64{1.0, 3.0, 5.0}, 0, constants.NoEven},
+		{"OnlyEvenNumbers", []float64{2.0, 4.0, 6.0}, 4.0, constants.NoError},
+		{"AllNumbers", []float64{1.0, 2.0, 3.0, 4.0}, 3.0, constants.NoError},
+		{"IncludeNegativeNum", []float64{-2.0, -4.0, 1.0}, -3.0, constants.NoError},
 	}
 
 	for _, in := range input {
 		t.Run(in.name, func(t *testing.T) {
 			e := Even{Values: in.val}
 			result, err := e.CalcuateAverage()
-			if (err != nil) && in.expError != "no even numbers" {
+			if (err != nil) && in.expError != constants.NoEven {
 				t.Fatalf("expected error: %v, got: %v", in.expError, err)
 			}
-			if result != in.expResult && in.expError == "no" {
+			if result != in.expResult && in.expError == constants.NoError {
 				t.Errorf("expected: %v, got: %v", in.expResult, result)
 			}
 		})
@@ -39,20 +42,20 @@ func TestOddCalcuateAverage(t *testing.T) {
 		expResult float64
 		expError  string
 	}{
-		{"NotContainOddNum", []float64{2.0, 4.0, 6.0}, 0, "no odd numbers"},
-		{"OnlyOddNumbers", []float64{1.0, 3.0, 5.0}, 3.0, "no"},
-		{"AllNumbers", []float64{1.0, 2.0, 3.0, 4.0}, 2.0, "no"},
-		{"IncludeNegativeNum", []float64{-2.0, -4.0, 1.0}, 1.0, "no"},
+		{"NotContainOddNum", []float64{2.0, 4.0, 6.0}, 0, constants.NoOdd},
+		{"OnlyOddNumbers", []float64{1.0, 3.0, 5.0}, 3.0, constants.NoError},
+		{"AllNumbers", []float64{1.0, 2.0, 3.0, 4.0}, 2.0, constants.NoError},
+		{"IncludeNegativeNum", []float64{-2.0, -4.0, 1.0}, 1.0, constants.NoError},
 	}
 
 	for _, in := range input {
 		t.Run(in.name, func(t *testing.T) {
 			e := Odd{Values: in.val}
 			result, err := e.CalcuateAverage()
-			if (err != nil) && in.expError != "no odd numbers" {
+			if (err != nil) && in.expError != constants.NoOdd {
 				t.Fatalf("expected error: %v, got: %v", in.expError, err)
 			}
-			if result != in.expResult && in.expError == "no" {
+			if result != in.expResult && in.expError == constants.NoError {
 				t.Errorf("expected: %v, got: %v", in.expResult, result)
 			}
 		})
@@ -68,20 +71,20 @@ func TestAllCalcuateAverage(t *testing.T) {
 		expResult float64
 		expError  string
 	}{
-		{"SingleNumber", []float64{}, 0, "no numbers"},
-		{"SingleNumber", []float64{5.0}, 5.0, "no"},
-		{"MultipleNumbers", []float64{1.0, 2.0, 3.0, 4.0}, 2.5, "no"},
-		{"WithNegativeNumbers", []float64{-2.0, 3.0, 4.0, 6.0}, 2.75, "no"},
+		{"SingleNumber", []float64{}, 0, constants.NoNum},
+		{"SingleNumber", []float64{5.0}, 5.0, constants.NoError},
+		{"MultipleNumbers", []float64{1.0, 2.0, 3.0, 4.0}, 2.5, constants.NoError},
+		{"WithNegativeNumbers", []float64{-2.0, 3.0, 4.0, 6.0}, 2.75, constants.NoError},
 	}
 
 	for _, in := range input {
 		t.Run(in.name, func(t *testing.T) {
 			e := EvenOdd{Values: in.val}
 			result, err := e.CalcuateAverage()
-			if (err != nil) && in.expError != "no numbers" {
+			if (err != nil) && in.expError != constants.NoNum {
 				t.Fatalf("expected error: %v, got: %v", in.expError, err)
 			}
-			if result != in.expResult && in.expError == "no" {
+			if result != in.expResult && in.expError == constants.NoError {
 				t.Errorf("expected: %v, got: %v", in.expResult, result)
 			}
 		})
