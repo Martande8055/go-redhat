@@ -1,6 +1,7 @@
 package average
 
 import (
+	"GO_PROJECT/constants"
 	"errors"
 	"fmt"
 )
@@ -37,7 +38,7 @@ func (e *Even) CalcuateAverage() (float64, error) {
 		}
 	}
 	if e.Num == 0 {
-		return 0, errors.New("no even numbers")
+		return 0, errors.New(constants.NoEven)
 	}
 	return sum / float64(e.Num), nil
 }
@@ -54,7 +55,7 @@ func (o *Odd) CalcuateAverage() (float64, error) {
 		}
 	}
 	if o.Num == 0 {
-		return 0, fmt.Errorf("no odd numbers")
+		return 0, fmt.Errorf(constants.NoOdd)
 	}
 	return sum / float64(o.Num), nil
 }
@@ -66,7 +67,7 @@ func (e *EvenOdd) CalcuateAverage() (float64, error) {
 		e.Num++
 	}
 	if e.Num == 0 {
-		return 0, errors.New("no numbers")
+		return 0, errors.New(constants.NoNum)
 	}
 	return sum / float64(e.Num), nil
 }
