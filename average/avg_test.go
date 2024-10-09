@@ -21,7 +21,8 @@ func TestEvenCalcuateAverage(t *testing.T) {
 
 	for _, in := range input {
 		t.Run(in.name, func(t *testing.T) {
-			e := Even{Values: in.val}
+			// e := Even{Values: in.val}
+			var e Avg = &Even{Values: in.val}
 			result, err := e.CalcuateAverage()
 			if (err != nil) && in.expError != constants.NoEven {
 				t.Fatalf("expected error: %v, got: %v", in.expError, err)
@@ -50,7 +51,8 @@ func TestOddCalcuateAverage(t *testing.T) {
 
 	for _, in := range input {
 		t.Run(in.name, func(t *testing.T) {
-			e := Odd{Values: in.val}
+			// e := Odd{Values: in.val}
+			var e Avg = &Odd{Values: in.val}
 			result, err := e.CalcuateAverage()
 			if (err != nil) && in.expError != constants.NoOdd {
 				t.Fatalf("expected error: %v, got: %v", in.expError, err)
@@ -79,7 +81,8 @@ func TestAllCalcuateAverage(t *testing.T) {
 
 	for _, in := range input {
 		t.Run(in.name, func(t *testing.T) {
-			e := EvenOdd{Values: in.val}
+			//e :=  EvenOdd{Values: in.val}
+			var e Avg = &EvenOdd{Values: in.val}
 			result, err := e.CalcuateAverage()
 			if (err != nil) && in.expError != constants.NoNum {
 				t.Fatalf("expected error: %v, got: %v", in.expError, err)
@@ -90,4 +93,27 @@ func TestAllCalcuateAverage(t *testing.T) {
 		})
 	}
 
+}
+
+func BenchmarkEvenCalcuateAverage(b *testing.B) {
+
+	var even Avg = &Even{Values: []float64{1.0, 2.0, 3.0, 4.0}}
+	for i := 0; i < b.N; i++ {
+		even.CalcuateAverage()
+	}
+}
+
+func BenchmarkOddCalcuateAverage(b *testing.B) {
+	var odd Avg = &Odd{Values: []float64{1.0, 2.0, 3.0, 4.0}}
+
+	for i := 0; i < b.N; i++ {
+		odd.CalcuateAverage()
+	}
+}
+
+func BenchmarkEvenOddCalcuateAverage(b *testing.B) {
+	var evenodd Avg = &EvenOdd{Values: []float64{1.0, 2.0, 3.0, 4.0}}
+	for i := 0; i < b.N; i++ {
+		evenodd.CalcuateAverage()
+	}
 }
