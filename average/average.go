@@ -7,25 +7,28 @@ import (
 )
 
 type Avg interface {
-	CalcuateAverage() (float64, error)
+	Calcuate() (float64, error)
 }
 
 type Even struct {
 	Num    int
+	Op     string
 	Values []float64
 }
 
 type Odd struct {
 	Num    int
+	Op     string
 	Values []float64
 }
 
 type EvenOdd struct {
 	Num    int
+	Op     string
 	Values []float64
 }
 
-func (e *Even) CalcuateAverage() (float64, error) {
+func (e *Even) Calcuate() (float64, error) {
 	var sum float64
 
 	for _, value := range e.Values {
@@ -40,10 +43,18 @@ func (e *Even) CalcuateAverage() (float64, error) {
 	if e.Num == 0 {
 		return 0, errors.New(constants.NoEven)
 	}
-	return sum / float64(e.Num), nil
+	switch e.Op {
+	case "avg":
+		return sum / float64(e.Num), nil
+	case "sum":
+		return sum, nil
+	case "count":
+		return float64(e.Num), nil
+	}
+	return 0, errors.New("invalid Operation")
 }
 
-func (o *Odd) CalcuateAverage() (float64, error) {
+func (o *Odd) Calcuate() (float64, error) {
 	var sum float64
 	for _, value := range o.Values {
 		if value != float64(int64(value)) {
@@ -57,10 +68,18 @@ func (o *Odd) CalcuateAverage() (float64, error) {
 	if o.Num == 0 {
 		return 0, fmt.Errorf(constants.NoOdd)
 	}
-	return sum / float64(o.Num), nil
+	switch o.Op {
+	case "avg":
+		return sum / float64(o.Num), nil
+	case "sum":
+		return sum, nil
+	case "count":
+		return float64(o.Num), nil
+	}
+	return 0, errors.New("invalid operation")
 }
 
-func (e *EvenOdd) CalcuateAverage() (float64, error) {
+func (e *EvenOdd) Calcuate() (float64, error) {
 	var sum float64
 	for _, value := range e.Values {
 		sum += value
@@ -69,5 +88,13 @@ func (e *EvenOdd) CalcuateAverage() (float64, error) {
 	if e.Num == 0 {
 		return 0, errors.New(constants.NoNum)
 	}
-	return sum / float64(e.Num), nil
+	switch e.Op {
+	case "avg":
+		return sum / float64(e.Num), nil
+	case "sum":
+		return sum, nil
+	case "count":
+		return float64(e.Num), nil
+	}
+	return 0, errors.New("invalid operation")
 }
