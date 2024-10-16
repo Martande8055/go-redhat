@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestEvenCalcuateAverage(t *testing.T) {
+func TestEvenCalcuate(t *testing.T) {
 
 	input := []struct {
 		name      string
@@ -16,7 +16,7 @@ func TestEvenCalcuateAverage(t *testing.T) {
 	}{
 		{"NotContainEvenNum", []float64{1.0, 3.0, 5.0}, "sum", 0, constants.NoEven},
 		{"OnlyEvenNumbers", []float64{2.0, 4.0, 6.0}, "avg", 4.0, constants.NoError},
-		{"AllNumbers", []float64{1.0, 2.0, 3.0, 4.0}, "count", 3.0, constants.NoError},
+		{"AllNumbers", []float64{1.0, 2.0, 3.0, 4.0}, "count", 2.0, constants.NoError},
 		{"IncludeNegativeNum", []float64{-2.0, -4.0, 1.0}, "avg", -3.0, constants.NoError},
 	}
 
@@ -36,7 +36,7 @@ func TestEvenCalcuateAverage(t *testing.T) {
 
 }
 
-func TestOddCalcuateAverage(t *testing.T) {
+func TestOddCalcuate(t *testing.T) {
 
 	input := []struct {
 		name      string
@@ -67,7 +67,7 @@ func TestOddCalcuateAverage(t *testing.T) {
 
 }
 
-func TestAllCalcuateAverage(t *testing.T) {
+func TestAllCalcuate(t *testing.T) {
 
 	input := []struct {
 		name      string
@@ -77,8 +77,8 @@ func TestAllCalcuateAverage(t *testing.T) {
 		expError  string
 	}{
 		{"SingleNumber", []float64{}, "sum", 0, constants.NoNum},
-		{"SingleNumber", []float64{5.0}, "count", 5.0, constants.NoError},
-		{"MultipleNumbers", []float64{1.0, 2.0, 3.0, 4.0}, "sum", 2.5, constants.NoError},
+		{"SingleNumber", []float64{5.0}, "count", 1.0, constants.NoError},
+		{"MultipleNumbers", []float64{1.0, 2.0, 3.0, 4.0}, "sum", 10, constants.NoError},
 		{"WithNegativeNumbers", []float64{-2.0, 3.0, 4.0, 6.0}, "avg", 2.75, constants.NoError},
 	}
 
