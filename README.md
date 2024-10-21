@@ -85,11 +85,11 @@ To run the application in a Docker container:
 
 1. Build the Docker image:
 ```
-docker build -t go_average_app .
+podman build -t go_average_app .
 ```
 2. Run the Docker container:
 ```
-docker run -p 3100:3100 go_average_app
+podman run -p 3100:3100 go_average_app
 ```
 
 ## ⭐️ Project Assistance
