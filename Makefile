@@ -22,10 +22,10 @@ clean:
 	$(GO_CLEAN)
 	rm -f $(BINARY)
 
-docker-build:
-	docker build -t $(APP_NAME) .
+podman-build:
+	podman build -t $(APP_NAME) .
 
-docker-run:
-	docker run -p $(PORT):$(PORT) $(APP_NAME)
+podman-run:
+	podman run -p $(PORT):$(PORT) $(APP_NAME)
 
 .PHONY: all build run test clean docker-build docker-run
