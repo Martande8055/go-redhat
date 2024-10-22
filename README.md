@@ -77,7 +77,7 @@ Json Input Example:
 
 Run the unit tests with:
 ```
-go test ./...
+go test ./... -v
 ```
 
 ## 🚚 Docker Support
