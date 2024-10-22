@@ -1,11 +1,12 @@
 <div align="center">
   
-![Create Go App][repo_logo_img]
+![Create Go App](https://github.com/create-go-app/cli/assets/11155743/95024afc-5e3b-4d6f-8c9c-5daaa51d080d)
   
-![Go version](https://img.shields.io/badge/Go-1.22.7+-00ADD8?style=for-the-badge&logo=go)
-![Go report](https://img.shields.io/badge/Go_report-A+-success?style=for-the-badge&logo=none)
-![Code coverage](https://img.shields.io/badge/code_coverage-100%25-success?style=for-the-badge&logo=none)<br/>
-![License](https://img.shields.io/badge/license-MIT-red?style=for-the-badge&logo=none)
+![Go version](https://img.shields.io/github/go-mod/go-version/Martande8055/go-redhat)
+![License](https://img.shields.io/github/license/Martande8055/go-redhat)
+![issues](https://img.shields.io/github/issues/Martande8055/go-redhat)<br/>
+![Github Stars](https://img.shields.io/github/stars/Martande8055/go-redhat)
+![Github Forks](https://img.shields.io/github/forks/Martande8055/go-redhat)
 
 # Average Calculation API
 
@@ -37,11 +38,11 @@ The server will start on port 3100.
 Usage
 You can send POST requests to the following endpoints to calculate averages:
 
-- For Even Numbers: /even
+- For Even Numbers: `/even`
   
-- For Odd Numbers: /odd
+- For Odd Numbers: `/odd`
   
-- For All Numbers: /evenodd
+- For All Numbers: `/evenodd`
 
 Example Request
 Here's how to make a request using curl:
@@ -51,17 +52,17 @@ curl -X POST http://localhost:3100/even -H "Content-Type: application/json" -d '
 ```
 ## ⚙️ API Endpoints
 
-### POST /even
+### `POST /even`
 
 Calculate the average, sum, or count of even numbers.
 
 You can Specify different Operations as follows:
 
-- "avg" for average
+- `avg` for average
 
-- "sum" for sum
+- `sum` for sum
 
-- "count" for count
+- `count` for count
 
 Json Input Example:
 
@@ -83,11 +84,11 @@ go test ./...
 
 To run the application in a Docker container:
 
-1. Build the Docker image:
+1. Build the image:
 ```
 podman build -t go_average_app .
 ```
-2. Run the Docker container:
+2. Run the container:
 ```
 podman run -p 3100:3100 go_average_app
 ```
@@ -100,8 +101,3 @@ If you find this project helpful, please give it a star on GitHub!
 
 The Average Calculation API is free and open-source software licensed under the MIT License.
 
-
-
-<!-- Repository -->
-
-[repo_logo_img]: https://github.com/create-go-app/cli/assets/11155743/95024afc-5e3b-4d6f-8c9c-5daaa51d080d
