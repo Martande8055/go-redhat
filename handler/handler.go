@@ -4,6 +4,7 @@ import (
 	"GO_PROJECT/average"
 	"GO_PROJECT/model"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -11,11 +12,12 @@ var operation model.Operation
 
 func sendResponce(w http.ResponseWriter, statusCode int, payload interface{}) {
 
-	response, _ := json.Marshal(payload)
+	// response, _ := json.Marshal(payload)
 
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(statusCode)
-	w.Write(response)
+	// w.Write(response)
+	json.NewEncoder(w).Encode(payload)
 }
 
 func sendError(w http.ResponseWriter, StatusCode int, err string) {
@@ -60,8 +62,10 @@ func handler(w http.ResponseWriter, r *http.Request, str string) {
 		return
 	}
 
-	sendResponce(w, http.StatusOK, avg)
-
+	// sendResponce(w, http.StatusOK, avg)
+	resultString := fmt.Sprintf("%s of the %s numbers :", operation.Op, str)
+	resultmap := map[string]float64{resultString: avg}
+	sendResponce(w, http.StatusOK, resultmap)
 }
 
 func EvenAvg(w http.ResponseWriter, r *http.Request) {
