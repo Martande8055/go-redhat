@@ -64,7 +64,7 @@ func handler(w http.ResponseWriter, r *http.Request, str string) {
 
 	// sendResponce(w, http.StatusOK, avg)
 	resultString := fmt.Sprintf("%s of the %s numbers :", operation.Op, str)
-	resultmap := map[string]float64{resultString: avg}
+	resultmap := map[string]interface{}{"msg": resultString, "result": avg}
 	sendResponce(w, http.StatusOK, resultmap)
 }
 

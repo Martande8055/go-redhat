@@ -27,10 +27,10 @@ func TestEvenAvg(t *testing.T) {
 		t.Fatalf("expected statusCode: %v, got: %v", http.StatusOK, response.StatusCode)
 	}
 
-	expected := "15"
+	expected := `{"msg":"avg of the even numbers :","result":15}` + "\n"
 
 	if expected != string(respBody) {
-		t.Errorf("expected: %v, got: %v", expected, string(reqbody))
+		t.Errorf("expected: %v, got: %v", expected, string(respBody))
 	}
 
 }
@@ -64,11 +64,11 @@ func TestEvenAvgEmptyBody(t *testing.T) {
 		t.Errorf("expected status code %v, got %v", resp.StatusCode, resp.StatusCode)
 	}
 
-	err_msg := map[string]string{"error": "failed to read req body"}
-	response, _ := json.Marshal(err_msg)
+	err_msg := `{"error":"failed to read req body"}` + "\n"
+	//response, _ := json.Marshal(err_msg)
 
-	if string(respBody) != string(response) {
-		t.Errorf("expected error message %v; got %v", err_msg, string(respBody))
+	if string(respBody) != string(err_msg) {
+		t.Errorf("expected error message %v; got %v", string(err_msg), string(respBody))
 	}
 }
 
@@ -88,10 +88,10 @@ func TestOddAvg(t *testing.T) {
 		t.Fatalf("expected statusCode: %v, got: %v", http.StatusOK, response.StatusCode)
 	}
 
-	expected := "10"
+	expected := `{"msg":"avg of the odd numbers :","result":10}` + "\n"
 
 	if expected != string(respBody) {
-		t.Errorf("expected: %v, got: %v", expected, string(reqbody))
+		t.Errorf("expected: %v, got: %v", expected, string(respBody))
 	}
 
 }
@@ -125,11 +125,11 @@ func TestOddAvgEmptyBody(t *testing.T) {
 		t.Errorf("expected status code %v, got %v", resp.StatusCode, resp.StatusCode)
 	}
 
-	err_msg := map[string]string{"error": "failed to read req body"}
-	response, _ := json.Marshal(err_msg)
+	err_msg := `{"error":"failed to read req body"}` + "\n"
+	//response, _ := json.Marshal(err_msg)
 
-	if string(respBody) != string(response) {
-		t.Errorf("expected error message %v; got %v", err_msg, string(respBody))
+	if string(respBody) != string(err_msg) {
+		t.Errorf("expected error message %v; got %v", string(err_msg), string(respBody))
 	}
 }
 
@@ -149,10 +149,10 @@ func TestEvenoddAvg(t *testing.T) {
 		t.Fatalf("expected statusCode: %v, got: %v", http.StatusOK, response.StatusCode)
 	}
 
-	expected := "12.5"
+	expected := `{"msg":"avg of the evenodd numbers :","result":12.5}` + "\n"
 
 	if expected != string(respBody) {
-		t.Errorf("expected: %v, got: %v", expected, string(reqbody))
+		t.Errorf("expected: %v, got: %v", string(expected), string(respBody))
 	}
 
 }
@@ -186,10 +186,10 @@ func TestEvenoddAvgEmptyBody(t *testing.T) {
 		t.Errorf("expected status code %v, got %v", resp.StatusCode, resp.StatusCode)
 	}
 
-	err_msg := map[string]string{"error": "failed to read req body"}
-	response, _ := json.Marshal(err_msg)
+	err_msg := `{"error":"failed to read req body"}` + "\n"
+	//response, _ := json.Marshal(err_msg)
 
-	if string(respBody) != string(response) {
+	if string(respBody) != string(err_msg) {
 		t.Errorf("expected error message %v; got %v", err_msg, string(respBody))
 	}
 }

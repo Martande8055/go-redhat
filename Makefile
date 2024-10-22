@@ -4,10 +4,14 @@ PORT = 3100
 
 GO = go
 GO_BUILD = $(GO) build -o $(BINARY) main.go
-GO_TEST = $(GO) test ./...
+GO_TEST = $(GO) test ./... -v
 GO_CLEAN = $(GO) clean
 
-all: build
+all: 
+	make clean
+	make test
+	make build
+	make run
 
 build:
 	$(GO_BUILD)
