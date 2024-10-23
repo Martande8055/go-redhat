@@ -2,10 +2,10 @@ APP_NAME = average-calculation-api
 BINARY = main
 PORT = 3100
 
-GO = go
-GO_BUILD = $(GO) build -o $(BINARY) main.go
-GO_TEST = $(GO) test ./... -v
-GO_CLEAN = $(GO) clean
+
+GO_BUILD = go build -o $(BINARY) main.go
+GO_TEST = go test ./... -v
+GO_CLEAN = go clean
 
 all: 
 	make clean
