@@ -13,9 +13,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Generate changelog
         run: |
-          git log
           make changelog | tee -a changelog
           cat changelog
       - name: Set up Go
