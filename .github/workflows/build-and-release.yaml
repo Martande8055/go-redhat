@@ -15,7 +15,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Generate changelog
         run: |
-          git log --pretty='%h - %s (%an)' ${git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1)}..${git describe --tags --abbrev=0}
+          NEW_TAG=$(git describe --tags --abbrev=0)
+          OLD_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
+          git log --pretty='%h - %s (%an)' ${OLD_TAG}..${NEW_TAG}
           make changelog | tee -a changelog
           cat changelog
       - name: Set up Go
