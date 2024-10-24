@@ -45,7 +45,7 @@ jobs:
           tag: ${{ github.ref_name }}
         run: |
           gh release upload avg-${{ github.ref_name }}-x86_64 ${{ env.BIN_PATH }} --clobber
-      
+ 
       - name: Create image
         run: |
            sudo s2i build . quay.io/rh-ee-smartand/mygo-s2i-builder quay.io/rh-ee-smartand/mygo-avg-app
