@@ -36,3 +36,5 @@ podman-run:
 
 changelog:
 	@changelog.sh
+trylog:
+	git log --pretty='%h - %s (%an)'  avg-main-x86_64..v2.0
