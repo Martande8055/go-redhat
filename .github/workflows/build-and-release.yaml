@@ -59,10 +59,9 @@ jobs:
            sudo docker push quay.io/rh-ee-smartand/mygo-avg-app
 
       - name: Install OCP
-        run: |
-          wget https://downloads-openshift-console.apps.shrocp4upi415ovn.lab.upshift.rdu2.redhat.com/amd64/linux/oc.tar
-          tar -xvf oc.tar
-          sudo mv oc /usr/local/bin
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: 4
 
       - name: Deploy on OCP
         run: |
