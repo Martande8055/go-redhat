@@ -67,7 +67,6 @@ jobs:
         run: |
             oc login --token=${{ secrets.OC_TOCKEN }} --server=https://api.sandbox-m3.1530.p1.openshiftapps.com:6443
             oc project rh-ee-sakkulka-dev
-            oc delete all --all
             oc create deployment mygo-avg11 --image=quay.io/rh-ee-smartand/mygo-avg-app
             sleep 10
             oc expose deployment mygo-avg11 --port 3100
