@@ -58,3 +58,21 @@ jobs:
            sudo docker login -u rh-ee-smartand -p ${{ secrets.QUAY_PASSWORD }} quay.io
            sudo docker push quay.io/rh-ee-smartand/mygo-avg-app
 
+      - name: Install OCP
+        run: |
+          wget https://downloads-openshift-console.apps.shrocp4upi415ovn.lab.upshift.rdu2.redhat.com/amd64/linux/oc.tar
+          tar -xvf oc.tar
+          sudo mv oc /usr/local/bin
+
+      - name: Deploy on OCP
+        run: |
+            oc login https://api.saurabh.lab.psi.pnq2.redhat.com:6443 -u ${{ secrets.OCP_USER }} -p ${{ secrets.OCP_PASSWORD }} 
+            oc project evenodd 
+            oc delete all --all
+            oc create deployment mygo-avg11 --image=quay.io/rh-ee-smartand/mygo-avg-app
+            sleep 10
+            oc expose deployment mygo-avg11 --port 3100
+            sleep 10
+            oc expose service mygo-avg11
+            oc get routes
+
