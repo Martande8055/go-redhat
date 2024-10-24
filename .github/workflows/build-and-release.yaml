@@ -65,7 +65,7 @@ jobs:
 
       - name: Deploy on OCP
         run: |
-            oc login https://api.saurabh.lab.psi.pnq2.redhat.com:6443 -u ${{ secrets.OCP_USER }} -p ${{ secrets.OCP_PASSWORD }} 
+            oc login --token=${{ secrets.OC_TOCKEN }} --server=https://api.sandbox-m3.1530.p1.openshiftapps.com:6443
             oc project evenodd 
             oc delete all --all
             oc create deployment mygo-avg11 --image=quay.io/rh-ee-smartand/mygo-avg-app
