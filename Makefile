@@ -7,6 +7,8 @@ GO_BUILD = go build -o $(BINARY) main.go
 GO_TEST = go test ./... -v
 GO_CLEAN = go clean
 
+.PHONY: all build run test clean docker-build docker-run
+
 all: 
 	make clean
 	make test
@@ -32,4 +34,5 @@ podman-build:
 podman-run:
 	podman run -p $(PORT):$(PORT) $(APP_NAME)
 
-.PHONY: all build run test clean docker-build docker-run
+changelog:
+	@changelog.sh
