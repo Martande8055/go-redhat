@@ -35,6 +35,4 @@ podman-run:
 	podman run -p $(PORT):$(PORT) $(APP_NAME)
 
 changelog:
-	@changelog.sh
-trylog:
-	git log --pretty='%h - %s (%an)'  "avg-main-x86_64"..v2.0
+	@./changelog.sh
