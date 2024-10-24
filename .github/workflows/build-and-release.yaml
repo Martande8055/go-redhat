@@ -48,8 +48,9 @@ jobs:
 
       - name: Install s2i
         run: |
-          sudo apt install -y s2i
-          sudo apt install -y docker
+           wget https://github.com/openshift/source-to-image/releases/download/v1.1.14/source-to-image-v1.1.14-874754de-linux-386.tar.gz
+           tar -xvf source-to-image-v1.1.14-874754de-linux-386.tar.gz
+           sudo mv s2i /usr/local/bin
  
       - name: Create image
         run: |
