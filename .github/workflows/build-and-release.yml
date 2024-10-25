@@ -97,5 +97,5 @@ jobs:
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          run: |
-             gh release upload avg-${{ env.NEXT_TAG }}-x86_64 ${{ env.BIN_PATH }} --clobber
+             gh release upload avg-${{ env.NEXT_TAG }}-x86_64 $(pwd)/main --clobber
 
