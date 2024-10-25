@@ -11,10 +11,15 @@ on:
     types:
       - closed
 jobs:
-  build:
-    name: Build
+  create-release:
+    name: release
     runs-on: ubuntu-latest
-   
+    permissions:
+      contents: write
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'BUILD_AND_RELEASE')) ||
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && contains(github.event.pull_request.title, 'BUILD_AND_RELEASE')) ||
+      (github.event_name == 'workflow_dispatch')
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
@@ -37,65 +42,56 @@ jobs:
         binary_path=$(pwd)/main
         echo "BIN_PATH=${binary_path}" >> $GITHUB_ENV
 
-  create-release:
-    name: release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'BUILD_AND_RELEASE')) ||
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && contains(github.event.pull_request.title, 'BUILD_AND_RELEASE')) ||
-      (github.event_name == 'workflow_dispatch')
-    steps:
-       - name: Checkout Repo
-         uses: actions/checkout@v4
-         with:
-           fetch-depth: '0'
-           
-       - name: Generate changelog
-         run: |
-           git log
-           make changelogs | tee -a changelog
-
-       - name: Check for tag
-         run: |
-           if git describe --exact-match HEAD; then
-             echo "TAGGED_COMMIT=true" >> $GITHUB_ENV
-           else
-             echo "TAGGED_COMMIT=false" >> $GITHUB_ENV
-           fi
+ 
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+      with:
+       fetch-depth: '0'
        
-       - name: Add tag if not tagged
-         if: env.TAGGED_COMMIT == 'false'
-         run: |
-            A=$(( $(git describe --tags --abbrev=0 | sed "s/v//" | sed "s/.0//") + 1 ))
-            echo $A
-            B=$(echo "v${A}.0")
-            echo $B
-            echo "NEXT_TAG=${B}" >>  $GITHUB_ENV
-            echo ${{ env.NEXT_TAG }}
-            git config --local user.email "sm@gamil.com"
-            git config --local user.name "saurabh"
-            git tag -a "v${A}.0" -m "Release ${{ env.NEXT_TAG }}"
-            git push origin "v${A}.0"
+    - name: Generate changelog
+      run: |
+       git log
+       make changelogs | tee -a changelog
 
-       - name: Get existing tag if present
-         if: env.TAGGED_COMMIT == 'true'
-         run: |
-            A=$(git describe --exact-match HEAD)
-            echo "NEXT_TAG=${A}" >>  $GITHUB_ENV
-         
-       - name: Create release
-         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         run: |
-           gh release create avg-${{ env.NEXT_TAG }}-x86_64 \
-           --repo="$GITHUB_REPOSITORY" \
-           --title="${GITHUB_REPOSITORY#*/} ${{ env.NEXT_TAG }}" \
-           --generate-notes
-       - name: Upload Artifact
-         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         run: |
-             gh release upload avg-${{ env.NEXT_TAG }}-x86_64 $(pwd)/main --clobber
+    - name: Check for tag
+      run: |
+       if git describe --exact-match HEAD; then
+         echo "TAGGED_COMMIT=true" >> $GITHUB_ENV
+       else
+         echo "TAGGED_COMMIT=false" >> $GITHUB_ENV
+       fi
+   
+    - name: Add tag if not tagged
+      if: env.TAGGED_COMMIT == 'false'
+      run: |
+        A=$(( $(git describe --tags --abbrev=0 | sed "s/v//" | sed "s/.0//") + 1 ))
+        echo $A
+        B=$(echo "v${A}.0")
+        echo $B
+        echo "NEXT_TAG=${B}" >>  $GITHUB_ENV
+        echo ${{ env.NEXT_TAG }}
+        git config --local user.email "sm@gamil.com"
+        git config --local user.name "saurabh"
+        git tag -a "v${A}.0" -m "Release ${{ env.NEXT_TAG }}"
+        git push origin "v${A}.0"
+
+    - name: Get existing tag if present
+      if: env.TAGGED_COMMIT == 'true'
+      run: |
+        A=$(git describe --exact-match HEAD)
+        echo "NEXT_TAG=${A}" >>  $GITHUB_ENV
+     
+    - name: Create release
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+       gh release create avg-${{ env.NEXT_TAG }}-x86_64 \
+       --repo="$GITHUB_REPOSITORY" \
+       --title="${GITHUB_REPOSITORY#*/} ${{ env.NEXT_TAG }}" \
+       --generate-notes
+    - name: Upload Artifact
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+         gh release upload avg-${{ env.NEXT_TAG }}-x86_64 $(pwd)/main --clobber
 
