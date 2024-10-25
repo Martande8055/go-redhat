@@ -17,7 +17,8 @@ jobs:
           fetch-depth: 0
       - name: Generate changelog
         run: |
-          make changelogs 
+          make changelogs | tee -a changelogs
+          cat changelogs
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -35,6 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
+          cat changelogs
           gh release create avg-${{ github.ref_name }}-x86_64 \
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
