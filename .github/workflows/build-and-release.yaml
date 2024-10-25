@@ -40,7 +40,7 @@ jobs:
           gh release create avg-${{ github.ref_name }}-x86_64 \
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --notes-file changelog
+              --notes-file changelogs
       - name: Upload Artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
