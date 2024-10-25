@@ -74,6 +74,8 @@ jobs:
             echo $B
             echo "NEXT_TAG=${B}" >>  $GITHUB_ENV
             echo ${{ env.NEXT_TAG }}
+            git config --local user.email "sm@gamil.com"
+            git config --local user.name "saurabh"
             git tag -a "v${A}.0" -m "Release ${{ env.NEXT_TAG }}"
             git push origin "v${A}.0"
 
