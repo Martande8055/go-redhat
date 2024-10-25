@@ -9,6 +9,8 @@ cat << EOF
 # Changelog
 
 ## [$(git describe --tags --abbrev=0)] - $(date +%d-%m-%Y)
+
+## $(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
 EOF
 for i in "feat:Added" "bug:Fixed" "chore:Changed" "remove:Removed" "deprecate:Deprecated" "security:Security" "ci:CI"; do
     TYPE=${i%%:*}
