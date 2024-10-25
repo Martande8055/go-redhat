@@ -17,6 +17,7 @@ jobs:
           fetch-depth: '0'
       - name: Generate changelog
         run: |
+          git log
           make changelogs | tee -a changelog
           cat changelog
       - name: Set up Go
