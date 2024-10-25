@@ -12,7 +12,7 @@ cat << EOF
 
 ## $(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
 EOF
-for i in "feat:Added" "bug:Fixed" "chore:Changed" "remove:Removed" "deprecate:Deprecated" "security:Security" "ci:CI"; do
+for i in "feat:Added" "fix:Fixed" "chore:Changed" "remove:Removed" "deprecate:Deprecated" "security:Security" "ci:CI"; do
     TYPE=${i%%:*}
     TITLE=${i#*:}
     if [[ -n $(git log --pretty='%h - %s (%an)' ${OLD_TAG}..${NEW_TAG} | grep -i -E "^.{10}(${TYPE}: )") ]]; then
