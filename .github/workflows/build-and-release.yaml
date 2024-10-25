@@ -15,12 +15,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - name: Generate changelog
-        run: |
-          git log
-          make changelogs | tee -a changelog
-          cat changelog
-         
+    
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -33,16 +28,13 @@ jobs:
           binary_path=$(pwd)/main
           echo "BIN_PATH=${binary_path}" >> $GITHUB_ENV
       - name: Create release
-        id: create_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
         run: |
-          cat changelog
-          gh release create avg-${{ github.ref_name }}-x86_64 \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --notes-file changelog
+          gh release create avg-${{ env.NEXT_TAG }}-x86_64 \
+          --repo="$GITHUB_REPOSITORY" \
+          --title="${GITHUB_REPOSITORY#*/} ${{ env.NEXT_TAG }}" \
+          --generate-notes
       - name: Upload Artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
