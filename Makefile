@@ -34,5 +34,5 @@ podman-build:
 podman-run:
 	podman run -p $(PORT):$(PORT) $(APP_NAME)
 
-changelog:
+changelogs:
 	@./changelog.sh
