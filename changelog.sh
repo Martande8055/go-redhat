@@ -2,8 +2,11 @@
 #
 # This script generates changelog for each releases
 
-NEW_TAG=$(git describe --tags --abbrev=0)
-OLD_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
+#NEW_TAG=$(git describe --tags --abbrev=0)
+#OLD_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
+
+NEW_TAG=v3.0
+OLD_TAG=v2.0
 
 cat << EOF
 # Changelog
