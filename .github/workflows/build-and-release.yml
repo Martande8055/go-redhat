@@ -93,7 +93,3 @@ jobs:
          run: |
              gh release upload avg-${{ env.NEXT_TAG }}-x86_64 ${{ env.BIN_PATH }} --clobber
 
-
-      
-       
-    
