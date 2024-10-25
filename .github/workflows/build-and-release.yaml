@@ -20,6 +20,8 @@ jobs:
           git log
           make changelogs | tee -a changelog
           cat changelog
+          echo $NEW_TAG
+          echo $OLD_TAG
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
