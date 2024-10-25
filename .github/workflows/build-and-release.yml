@@ -70,6 +70,7 @@ jobs:
          run: |
             A=$(( $(git describe --tags --abbrev=0 | sed "s/v//" | sed "s/.0//") + 1 ))
             echo "NEXT_TAG=v${A}.0" >>  $GITHUB_ENV
+            echo ${{ env.NEXT_TAG }}
             git tag -a ${{ env.NEXT_TAG }} -m "Release ${{ env.NEXT_TAG }}"
             git push origin ${{ env.NEXT_TAG }}
 
