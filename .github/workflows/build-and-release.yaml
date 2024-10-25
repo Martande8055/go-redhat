@@ -17,8 +17,7 @@ jobs:
           fetch-depth: 0
       - name: Generate changelog
         run: |
-          make changelogs | tee -a changelog
-          cat changelogs
+          make changelogs 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
