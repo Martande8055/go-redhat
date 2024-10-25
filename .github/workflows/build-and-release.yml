@@ -74,8 +74,8 @@ jobs:
             echo $B
             echo "NEXT_TAG=${B}" >>  $GITHUB_ENV
             echo ${{ env.NEXT_TAG }}
-            git tag -a ${{ env.NEXT_TAG }} -m "Release ${{ env.NEXT_TAG }}"
-            git push origin ${{ env.NEXT_TAG }}
+            git tag -a "v${A}.0" -m "Release ${{ env.NEXT_TAG }}"
+            git push origin "v${A}.0"
 
        - name: Get existing tag if present
          if: env.TAGGED_COMMIT == 'true'
