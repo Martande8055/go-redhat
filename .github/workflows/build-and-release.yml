@@ -44,11 +44,6 @@ jobs:
         binary_path=$(pwd)/main
         echo "BIN_PATH=${binary_path}" >> $GITHUB_ENV    
        
-    - name: Generate changelog
-      run: |
-       git log
-       make changelogs | tee -a changelog
-
     - name: Check for tag
       run: |
        if git describe --exact-match HEAD; then
@@ -89,15 +84,23 @@ jobs:
        --generate-notes
        
     - name: Upload Artifact
+      id: Upload_Artifact
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
          gh release upload avg-${{ env.NEXT_TAG }}-x86_64 ${{ env.BIN_PATH }} --clobber
          exit 1
 
-    - name: Cleanup
+    - name: Cleanup1
+      if: steps.Upload_Artifact.outcome == 'failure'
+      run: |
+        gh release delete ${{ env.NEXT_TAG }}
+        
+    - name: Cleanup2
       if: failure() && steps.tag_create.outcome == 'success'
       run: |
         git tag -d ${{ env.NEXT_TAG }}
         git push origin --delete ${{ env.NEXT_TAG }}
+        
+        
 
