@@ -80,10 +80,11 @@ jobs:
     - name: Create release
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       tag: ${{ env.NEXT_TAG }}
       run: |
        gh release create avg-${{ env.NEXT_TAG }}-x86_64 \
        --repo="$GITHUB_REPOSITORY" \
-       --title="${GITHUB_REPOSITORY#*/} ${ ${{ env.NEXT_TAG }}#v}" \
+       --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
        --generate-notes
        
     - name: Upload Artifact
