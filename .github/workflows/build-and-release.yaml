@@ -27,13 +27,22 @@ jobs:
         run: |
           binary_path=$(pwd)/main
           echo "BIN_PATH=${binary_path}" >> $GITHUB_ENV
+      
+      - name: Check commit tag format
+        run: |
+          if [[ ! "${{ github.ref_name }}" =~ ^v[0-9]+\.0$ ]]; then
+            echo "Error: Tag '${{ github.ref_name }}' does not match the required format 'vX.0'."
+            exit 1
+          fi
+          echo "Tag '${{ github.ref_name }}' is valid."
+      
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create avg-${{ env.NEXT_TAG }}-x86_64 \
+          gh release create avg-${{ github.ref_name }}-x86_64 \
           --repo="$GITHUB_REPOSITORY" \
-          --title="${GITHUB_REPOSITORY#*/} ${{ env.NEXT_TAG }}" \
+          --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
           --generate-notes
       - name: Upload Artifact
         env:
