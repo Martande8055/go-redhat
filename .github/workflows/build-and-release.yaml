@@ -30,11 +30,14 @@ jobs:
       
       - name: Check commit tag format
         run: |
-          if [[ ! "${{ github.ref_name }}" =~ ^v[0-9]+\.0$ ]]; then
-            echo "Error: Tag '${{ github.ref_name }}' does not match the required format 'vX.0'."
+          TAG_NAME="${{ github.ref_name }}"
+          if [[ ! $TAG_NAME =~ ^v[0-9]+\.0$ ]]; then
+            git tag -d "$TAG_NAME"  
+            git push origin --delete "$TAG_NAME"
+            echo "Error: Tag $TAG_NAME does not match the required format 'vX.0'."
             exit 1
           fi
-          echo "Tag '${{ github.ref_name }}' is valid."
+          echo "Tag $TAG_NAME is valid."
       
       - name: Create release
         env:
