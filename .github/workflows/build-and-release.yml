@@ -79,7 +79,7 @@ jobs:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        tag: ${{ env.NEXT_TAG }}
       run: |
-       gh release create avg-${{ env.NEXT_TAG }}-x86_64 \
+       gh release create {{ env.NEXT_TAG }} \
        --repo="$GITHUB_REPOSITORY" \
        --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
        --generate-notes
