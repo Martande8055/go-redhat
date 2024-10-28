@@ -59,6 +59,7 @@ jobs:
    
     - name: Add tag if not tagged
       if: env.TAGGED_COMMIT == 'false'
+      id: tag_create
       run: |
         A=$(( $(git describe --tags --abbrev=0 | sed "s/v//" | sed "s/.0//") + 1 ))
         echo $A
@@ -92,4 +93,10 @@ jobs:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
          gh release upload avg-${{ env.NEXT_TAG }}-x86_64 ${{ env.BIN_PATH }} --clobber
+
+    - name: Cleanup
+      if: failure() && steps.tag_create.outcome == 'success'
+      run: |
+        git tag -d ${{ env.NEXT_TAG }}
+        git push origin --delete ${{ env.NEXT_TAG }}
 
