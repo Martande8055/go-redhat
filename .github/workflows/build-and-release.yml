@@ -74,6 +74,7 @@ jobs:
         echo "NEXT_TAG=${A}" >>  $GITHUB_ENV
      
     - name: Create release
+      id: Create_release
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        tag: ${{ env.NEXT_TAG }}
@@ -84,7 +85,6 @@ jobs:
        --generate-notes
        
     - name: Upload Artifact
-      id: Upload_Artifact
       env:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
@@ -92,7 +92,7 @@ jobs:
          
 
     - name: Cleanup1
-      if: steps.Upload_Artifact.outcome == 'failure'
+      if: failure() && steps.Create_release.outcome == 'success'
       run: |
         gh release delete ${{ env.NEXT_TAG }}
         
