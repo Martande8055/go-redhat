@@ -92,6 +92,8 @@ jobs:
          
 
     - name: Cleanup1
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: failure() && steps.Create_release.outcome == 'success'
       run: |
         gh release delete ${{ env.NEXT_TAG }}
